@@ -5,7 +5,7 @@
     --text-light: #f0f0f0;
     --background-dark: #0f0f0f;
     --background-light: #ffffff;
-    --border-grey: #333;
+    --border-grey: #333; /* Original footer color base */
 
     --font-primary: 'Poppins', sans-serif;
 }
@@ -58,7 +58,6 @@ body.scrolled .main-header {
 }
 
 .logo {
-    /* Removed text-specific styles from here */
     display: flex;
     align-items: center;
     height: 100%; /* Ensure logo container matches header height */
@@ -104,15 +103,6 @@ body.scrolled .logo img {
     color: var(--primary-red);
 }
 
-.nav-extra .icon-link {
-    font-size: 1.4em;
-    color: var(--text-light);
-    transition: color 0.3s ease;
-}
-
-.nav-extra .icon-link:hover {
-    color: var(--primary-red);
-}
 
 /* --- Hero Section --- */
 .hero-section {
@@ -238,12 +228,15 @@ body.scrolled .logo img {
     font-size: 1.2em;
 }
 
-/* --- USP Showcase Sections --- */
+/* --- USP Showcase Sections (Modern Touch Added) --- */
 .usp-showcase {
     display: flex;
     min-height: 80vh; /* Make these sections substantial */
-    background-color: var(--background-light);
-    align-items: center; /* Align items vertically in center */
+    /* Added subtle gradient background to break up plain white */
+    background-image: linear-gradient(135deg, var(--background-light) 0%, #f7f7f7 100%);
+    align-items: center;
+    padding: 0 40px; /* Added horizontal padding to the section itself */
+    gap: 40px; /* Gap between the text and image/video blocks */
 }
 
 .usp-showcase.reverse {
@@ -255,13 +248,23 @@ body.scrolled .logo img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* Default left alignment, overridden by .centered-text or .usp-showcase.reverse below */
-    align-items: flex-start;
+    align-items: flex-start; /* Default left alignment */
     text-align: left;
-    padding: 80px; /* Original padding */
-    background-color: var(--background-light);
+    padding: 60px; /* Adjusted padding to accommodate shadows */
+    background-color: var(--background-light); /* Ensure content background is white */
     color: var(--text-dark);
+    border-radius: 8px; /* Subtle rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions */
 }
+
+/* Hover effect for text and image/video blocks */
+.usp-text-block:hover,
+.usp-image-block:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+}
+
 
 /* Specific centering for the #buy section's text block */
 #buy .usp-text-block {
@@ -270,7 +273,6 @@ body.scrolled .logo img {
     /* You can adjust padding here if needed, e.g., padding: 80px 40px; */
 }
 
-
 .usp-showcase.reverse .usp-text-block {
     align-items: flex-end; /* Align text right for reverse layout */
     text-align: right;
@@ -278,6 +280,8 @@ body.scrolled .logo img {
 
 /* Specific padding adjustment for #sell section's text block */
 #sell .usp-text-block {
+    /* This rule is for the text block within the *merged* sell section,
+       it will be overridden by .merged-text-container below for that specific section. */
     padding: 80px 40px 80px 80px; /* Top, Right, Bottom, Left - Right padding reduced */
 }
 
@@ -311,7 +315,10 @@ body.scrolled .logo img {
     display: flex; /* Allow video inside to be flex item */
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Hide any overflow from content inside */
+    overflow: hidden; /* Important for border-radius on images/videos */
+    border-radius: 8px; /* Subtle rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions */
 }
 
 /* Style for video inside usp-image-block */
@@ -319,6 +326,7 @@ body.scrolled .logo img {
     width: 100%; /* Make video fill its container */
     height: 100%;
     object-fit: cover; /* Cover the container without distortion */
+    display: block; /* Removes extra space below inline video */
 }
 
 /* --- Centered Text Modifier (generic) --- */
@@ -333,7 +341,91 @@ body.scrolled .logo img {
     padding-bottom: 30px;
 }
 
-/* --- Service USP Section (newly added style from your provided code) --- */
+/* --- New Merged USP Showcase Section (for #sell) --- */
+.usp-showcase-merged {
+    display: flex;
+    justify-content: center; /* Center the merged block horizontally */
+    align-items: center;    /* Center the merged block vertically */
+    min-height: 80vh;       /* Ensure the section takes up vertical space */
+    padding: 80px 40px;     /* Overall padding for the section */
+    background-image: linear-gradient(135deg, var(--background-light) 0%, #f7f7f7 100%); /* Subtle background gradient */
+}
+
+.merged-content-block {
+    display: flex;
+    /* ADD THIS LINE to put the video on the right within the merged block */
+    flex-direction: row-reverse;
+    background-color: var(--background-light); /* White background for the merged block */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); /* Enhanced shadow */
+    overflow: hidden; /* Crucial for rounded corners on inner content */
+    max-width: 1200px; /* Max width for the merged content */
+    width: 100%; /* Take full available width within max-width */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Hover transition */
+}
+
+.merged-content-block:hover {
+    transform: translateY(-8px); /* More pronounced lift effect on hover */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+.merged-video-container {
+    flex: 1; /* Take half the space */
+    min-width: 400px; /* Minimum width for the video side */
+    /* Remove explicit height: 100% here as video inside will control */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000; /* Fallback for video load */
+    position: relative; /* Needed for video positioning */
+    padding-bottom: calc(56.25% * 0.7); /* Aspect ratio 16:9 for half width (0.7 factor roughly 0.5) */
+    /* Adjust the multiplier (0.7) for desired height relative to width */
+}
+
+.merged-usp-video {
+    position: absolute; /* Position absolutely within the container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure video covers the container */
+    display: block;
+}
+
+.merged-text-container {
+    flex: 1; /* Take half the space */
+    padding: 80px; /* Generous padding for text */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Align text to the left */
+    text-align: left;
+    color: var(--text-dark);
+}
+
+.merged-text-container h2 {
+    font-size: 3.5em; /* Large heading */
+    font-weight: 700;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.merged-text-container p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 600px; /* Control text width */
+}
+
+.merged-text-container .btn-dark {
+    /* Style for the button within the merged block */
+    align-self: flex-start; /* Align button to the left */
+}
+
+
+/* --- Service USP Section (from your previous code) --- */
 .service-usp-section {
     padding: 80px 40px;
     background-color: var(--light-gray); /* Light gray background */
@@ -384,7 +476,7 @@ body.scrolled .logo img {
 footer {
     text-align: center;
     padding: 30px;
-    background-color: var(--border-grey);
+    background-image: linear-gradient(to bottom, #444, var(--border-grey)); /* Adjust colors as needed */
     color: var(--text-light);
     font-size: 0.9em;
 }
@@ -406,9 +498,7 @@ footer {
     .usp-text-block {
         padding: 60px; /* Slightly reduce padding on larger tablets */
     }
-    #sell .usp-text-block {
-        padding: 60px 30px 60px 60px; /* Adjust right padding for #sell */
-    }
+    /* #sell .usp-text-block specific rule is overridden by .merged-text-container now */
 }
 
 @media (max-width: 992px) {
@@ -442,6 +532,8 @@ footer {
 
     .usp-showcase {
         flex-direction: column; /* Stack vertically */
+        padding: 40px 20px; /* Adjust padding for stacked layout */
+        gap: 30px; /* Smaller gap for stacked layout */
     }
     .usp-showcase.reverse {
         flex-direction: column; /* Keep stacked */
@@ -450,14 +542,14 @@ footer {
         padding: 50px 40px;
         text-align: center; /* Center text when stacked */
         align-items: center; /* Center content when stacked */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); /* Slightly softer shadow on tablets */
     }
-    .usp-showcase.reverse .usp-text-block {
-        text-align: center;
-        align-items: center;
+    .usp-text-block:hover,
+    .usp-image-block:hover {
+        transform: translateY(-3px); /* Less lift on hover */
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
     }
-    #sell .usp-text-block { /* Reset specific padding for smaller screens */
-        padding: 50px 40px;
-    }
+    /* #sell .usp-text-block specific rule is overridden by .merged-text-container now */
     .usp-text-block h2 {
         font-size: 2.5em;
     }
@@ -471,6 +563,7 @@ footer {
     .usp-image-block {
         width: 100%;
         height: 350px; /* Give image a fixed height when stacked */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); /* Apply shadow to image block on tablets */
     }
     .usp-video {
         width: 100%; /* Make video fill container when stacked */
@@ -480,6 +573,39 @@ footer {
     }
     .service-usp-content h3 {
         font-size: 2.5em;
+    }
+
+    /* Merged Section Responsive */
+    .usp-showcase-merged {
+        padding: 50px 20px; /* Adjust padding for smaller screens */
+        min-height: unset; /* Allow height to adjust */
+    }
+    .merged-content-block {
+        flex-direction: column; /* Stack video and text vertically */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); /* Softer shadow for mobile */
+    }
+    .merged-content-block:hover {
+        transform: translateY(-3px); /* Less lift on hover for mobile */
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    }
+    .merged-video-container {
+        min-width: unset; /* Remove min-width when stacked */
+        height: 300px; /* Give video a fixed height when stacked */
+        padding-bottom: 0; /* Remove padding trick when height is fixed */
+    }
+    .merged-text-container {
+        padding: 40px 30px; /* Adjust padding for stacked text */
+        align-items: center; /* Center text when stacked */
+        text-align: center;
+    }
+    .merged-text-container h2 {
+        font-size: 2.5em;
+    }
+    .merged-text-container p {
+        font-size: 1.1em;
+    }
+    .merged-text-container .btn-dark {
+        align-self: center; /* Center button when stacked */
     }
 }
 
@@ -523,6 +649,15 @@ footer {
     .service-usp-content p {
         font-size: 1em;
     }
+    .merged-text-container h2 {
+        font-size: 2em;
+    }
+    .merged-text-container p {
+        font-size: 1em;
+    }
+    .merged-video-container {
+        height: 250px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -556,4 +691,20 @@ footer {
     .service-usp-content h3 {
         font-size: 1.8em;
     }
+    .merged-text-container h2 {
+        font-size: 1.8em;
+    }
+    .merged-text-container p {
+        font-size: 0.9em;
+    }
+    .merged-video-container {
+        height: 200px;
+    }
+    .merged-text-container {
+        padding: 30px 20px;
+    }
+}
+/* Explicitly ensure Service section video is on the left */
+#service .merged-content-block {
+    flex-direction: row; /* Forces video to left, text to right */
 }
