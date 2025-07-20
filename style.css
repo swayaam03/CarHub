@@ -2,9 +2,9 @@
 :root {
     --primary-red: #da291c; /* Lamborghini-inspired accent color */
     --text-dark: #1a1a1a;
-    --text-light: #f0f0f0;
-    --background-dark: #0f0f0f;
-    --background-light: #ffffff;
+    --text-light: #f0f0f0; /* Light text for dark backgrounds */
+    --background-dark: #0f0f0f; /* Very dark background */
+    --background-light: #ffffff; /* (Used less now for main sections) */
     --border-grey: #333; /* Original footer color base */
 
     --font-primary: 'Poppins', sans-serif;
@@ -23,8 +23,8 @@ html {
 body {
     font-family: var(--font-primary);
     line-height: 1.6;
-    color: var(--text-dark);
-    background-color: var(--background-light);
+    color: var(--text-light); /* Default body text is light for dark theme */
+    background-color: var(--background-dark); /* Base body background is dark */
     overflow-x: hidden;
 }
 
@@ -49,37 +49,29 @@ ul {
     padding: 20px 40px;
     z-index: 1000;
     background: transparent; /* Transparent over hero */
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease; /* Added backdrop-filter transition */
+    backdrop-filter: blur(0px); /* Initial state without blur */
 }
 
-/* Optional: Add a solid background to header on scroll */
+/* Header on scroll: Semi-transparent dark background with blur */
 body.scrolled .main-header {
-    background-color: rgba(0, 0, 0, 0.8); /* Dark background on scroll */
+    background-color: rgba(0, 0, 0, 0.8); /* Darker, semi-transparent */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow on scroll */
 }
 
 .logo {
     display: flex;
     align-items: center;
-    height: 100%; /* Ensure logo container matches header height */
+    height: 100%;
 }
 
 .logo img {
-    height: 80px; /* Adjusted height as per your preference */
-    width: auto; /* Maintain aspect ratio */
-    max-height: 100%; /* Safeguard */
-    /* This filter makes a white logo appear dark on a light background or inverts dark to light.
-       Adjust or remove based on your logo's actual colors and desired appearance. */
-    filter: brightness(0) invert(1);
+    height: 80px; /* Adjusted height */
+    width: auto;
+    max-height: 100%;
+    filter: none; /* REMOVED filter: brightness(0) invert(1); assuming logo.png is white/light */
 }
-
-/* Optional: Adjust logo color on scroll if header background changes */
-body.scrolled .logo img {
-    filter: none; /* Reset filter if header becomes opaque and logo needs to be original color */
-    /* Or set a specific filter if it needs to change color when scrolled, e.g., to dark
-       filter: brightness(0); // Makes it black
-    */
-}
-
 
 .main-nav ul {
     display: flex;
@@ -92,7 +84,7 @@ body.scrolled .logo img {
 .main-nav ul li a {
     font-size: 1.05em;
     font-weight: 600;
-    color: var(--text-light);
+    color: var(--text-light); /* Navigation links are light */
     padding-bottom: 5px;
     border-bottom: 2px solid transparent;
     transition: border-color 0.3s ease, color 0.3s ease;
@@ -123,14 +115,14 @@ body.scrolled .logo img {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2; /* Below overlay and content */
+    z-index: -2;
 }
 
 .background-media video,
 .background-media img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures video/image covers the entire section */
+    object-fit: cover;
 }
 
 .hero-overlay {
@@ -139,7 +131,7 @@ body.scrolled .logo img {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+    background: rgba(0, 0, 0, 0.5); /* Slightly stronger overlay for text readability */
     z-index: -1;
 }
 
@@ -151,7 +143,7 @@ body.scrolled .logo img {
 }
 
 .hero-content h1 {
-    font-size: 5.5em; /* Large, bold headline */
+    font-size: 5.5em;
     font-weight: 700;
     margin-bottom: 10px;
     letter-spacing: 4px;
@@ -183,7 +175,7 @@ body.scrolled .logo img {
     letter-spacing: 1px;
     text-transform: uppercase;
     transition: all 0.3s ease;
-    border-radius: 2px; /* Slight border-radius for modern look */
+    border-radius: 2px;
 }
 
 .btn-primary {
@@ -193,34 +185,20 @@ body.scrolled .logo img {
 }
 
 .btn-primary:hover {
-    background-color: #c0211a; /* Darker red on hover */
+    background-color: #c0211a;
     box-shadow: 0 8px 20px rgba(218, 41, 28, 0.3);
 }
 
 .btn-secondary {
-    background-color: transparent;
-    color: var(--text-light);
-    border-color: var(--text-light);
+    background-color: transparent; /* Transparent background */
+    color: var(--text-light); /* Light text */
+    border-color: var(--text-light); /* Light border */
 }
 
 .btn-secondary:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Subtle white tint on hover */
-    color: var(--primary-red);
-    border-color: var(--primary-red);
-}
-
-.btn-dark {
-    background-color: var(--background-dark);
-    color: var(--text-light);
-    border-color: var(--background-dark);
-    padding: 15px 30px;
-    font-size: 1em;
-}
-
-.btn-dark:hover {
-    background-color: var(--primary-red);
-    border-color: var(--primary-red);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: var(--primary-red); /* Red text on hover */
+    border-color: var(--primary-red); /* Red border on hover */
 }
 
 .large-btn {
@@ -228,15 +206,19 @@ body.scrolled .logo img {
     font-size: 1.2em;
 }
 
-/* --- USP Showcase Sections (Modern Touch Added) --- */
+/* --- USP Showcase Sections (Dark Theme with Modern Touch) --- */
 .usp-showcase {
     display: flex;
-    min-height: 80vh; /* Make these sections substantial */
-    /* Added subtle gradient background to break up plain white */
-    background-image: linear-gradient(135deg, var(--background-light) 0%, #f7f7f7 100%);
+    min-height: 80vh;
+    background-color: var(--background-dark); /* Solid dark background */
+    /* Subtle noise texture overlay */
+    background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noiseFilter)" opacity="0.03"%3E%3C/rect%3E%3C/svg%3E');
+    background-repeat: repeat;
+    background-size: 100px 100px; /* Adjust size of the noise pattern */
+
     align-items: center;
-    padding: 0 40px; /* Added horizontal padding to the section itself */
-    gap: 40px; /* Gap between the text and image/video blocks */
+    padding: 80px 40px; /* Added vertical padding to the section itself */
+    gap: 40px;
 }
 
 .usp-showcase.reverse {
@@ -248,21 +230,28 @@ body.scrolled .logo img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start; /* Default left alignment */
+    align-items: flex-start;
     text-align: left;
-    padding: 60px; /* Adjusted padding to accommodate shadows */
-    background-color: var(--background-light); /* Ensure content background is white */
-    color: var(--text-dark);
-    border-radius: 8px; /* Subtle rounded corners */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions */
+    padding: 60px;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent dark for the block */
+    color: var(--text-light);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* Hover effect for text and image/video blocks */
+/* Enhanced Hover effect for text and image/video blocks */
 .usp-text-block:hover,
 .usp-image-block:hover {
-    transform: translateY(-5px); /* Lift effect */
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+    transform: translateY(-8px); /* More pronounced lift */
+    /* Subtle glow in primary red */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(var(--primary-red-rgb), 0.5); /* Added glow */
+}
+
+/* RGB value for --primary-red to use in rgba() for box-shadow */
+:root {
+    /* ... other variables ... */
+    --primary-red-rgb: 218, 41, 28; /* RGB values for #da291c */
 }
 
 
@@ -270,23 +259,18 @@ body.scrolled .logo img {
 #buy .usp-text-block {
     align-items: center;
     text-align: center;
-    /* You can adjust padding here if needed, e.g., padding: 80px 40px; */
 }
 
 .usp-showcase.reverse .usp-text-block {
-    align-items: flex-end; /* Align text right for reverse layout */
+    align-items: flex-end;
     text-align: right;
 }
 
-/* Specific padding adjustment for #sell section's text block */
-#sell .usp-text-block {
-    /* This rule is for the text block within the *merged* sell section,
-       it will be overridden by .merged-text-container below for that specific section. */
-    padding: 80px 40px 80px 80px; /* Top, Right, Bottom, Left - Right padding reduced */
-}
+/* #sell .usp-text-block specific rule is handled by .merged-text-container below */
 
 
 .usp-text-block h2 {
+    color: var(--primary-red);
     font-size: 3.5em;
     font-weight: 700;
     margin-bottom: 25px;
@@ -296,14 +280,15 @@ body.scrolled .logo img {
 }
 
 .usp-text-block p {
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.2em;
     line-height: 1.8;
     margin-bottom: 40px;
-    max-width: 600px; /* Control text width */
+    max-width: 600px;
 }
 
 .usp-showcase.reverse .usp-text-block p {
-    margin-left: auto; /* Push text to the right for reverse */
+    margin-left: auto;
 }
 
 .usp-image-block {
@@ -311,100 +296,107 @@ body.scrolled .logo img {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 400px; /* Ensure image block has height on small screens */
-    display: flex; /* Allow video inside to be flex item */
+    min-height: 400px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Important for border-radius on images/videos */
-    border-radius: 8px; /* Subtle rounded corners */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transitions */
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 /* Style for video inside usp-image-block */
 .usp-video {
-    width: 100%; /* Make video fill its container */
+    width: 100%;
     height: 100%;
-    object-fit: cover; /* Cover the container without distortion */
-    display: block; /* Removes extra space below inline video */
+    object-fit: cover;
+    display: block;
 }
 
 /* --- Centered Text Modifier (generic) --- */
-/* Note: '.centered-text .usp-text-block' above handles specific text blocks.
-   This generic class applies if 'centered-text' is directly on a usp-showcase or other element. */
 .centered-text {
     text-align: center;
-    align-items: center; /* For flex containers */
+    align-items: center;
 }
 
 .padded-bottom {
     padding-bottom: 30px;
 }
 
-/* --- New Merged USP Showcase Section (for #sell) --- */
+/* --- Merged USP Showcase Section (for #sell, #service, #vintage) --- */
 .usp-showcase-merged {
     display: flex;
-    justify-content: center; /* Center the merged block horizontally */
-    align-items: center;    /* Center the merged block vertically */
-    min-height: 80vh;       /* Ensure the section takes up vertical space */
-    padding: 80px 40px;     /* Overall padding for the section */
-    background-image: linear-gradient(135deg, var(--background-light) 0%, #f7f7f7 100%); /* Subtle background gradient */
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 80px 40px;
+    background-color: var(--background-dark); /* Solid dark background */
+    /* Subtle noise texture overlay */
+    background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noiseFilter)" opacity="0.03"%3E%3C/rect%3E%3C/svg%3E');
+    background-repeat: repeat;
+    background-size: 100px 100px;
 }
 
 .merged-content-block {
     display: flex;
-    /* ADD THIS LINE to put the video on the right within the merged block */
-    flex-direction: row-reverse;
-    background-color: var(--background-light); /* White background for the merged block */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); /* Enhanced shadow */
-    overflow: hidden; /* Crucial for rounded corners on inner content */
-    max-width: 1200px; /* Max width for the merged content */
-    width: 100%; /* Take full available width within max-width */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Hover transition */
+    flex-direction: row-reverse; /* Default for #sell and #vintage, #service overrides */
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    max-width: 1200px;
+    width: 100%;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
+/* Specific rule to make service video on the left */
+#service .merged-content-block {
+    flex-direction: row; /* Video on left, text on right */
+}
+
+
 .merged-content-block:hover {
-    transform: translateY(-8px); /* More pronounced lift effect on hover */
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    transform: translateY(-8px);
+    /* Subtle glow in primary red for merged blocks */
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(var(--primary-red-rgb), 0.6); /* Added glow */
 }
 
 .merged-video-container {
-    flex: 1; /* Take half the space */
-    min-width: 400px; /* Minimum width for the video side */
-    /* Remove explicit height: 100% here as video inside will control */
+    flex: 1;
+    min-width: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000; /* Fallback for video load */
-    position: relative; /* Needed for video positioning */
-    padding-bottom: calc(56.25% * 0.7); /* Aspect ratio 16:9 for half width (0.7 factor roughly 0.5) */
-    /* Adjust the multiplier (0.7) for desired height relative to width */
+    background-color: #000;
+    position: relative;
+    padding-bottom: calc(56.25% * 0.7);
 }
 
 .merged-usp-video {
-    position: absolute; /* Position absolutely within the container */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure video covers the container */
+    object-fit: cover;
     display: block;
 }
 
 .merged-text-container {
-    flex: 1; /* Take half the space */
-    padding: 80px; /* Generous padding for text */
+    flex: 1;
+    padding: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start; /* Align text to the left */
+    align-items: flex-start;
     text-align: left;
-    color: var(--text-dark);
+    color: var(--text-light);
 }
 
 .merged-text-container h2 {
-    font-size: 3.5em; /* Large heading */
+    color: var(--primary-red);
+    font-size: 3.5em;
     font-weight: 700;
     margin-bottom: 25px;
     letter-spacing: 2px;
@@ -413,32 +405,48 @@ body.scrolled .logo img {
 }
 
 .merged-text-container p {
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.2em;
     line-height: 1.8;
     margin-bottom: 40px;
-    max-width: 600px; /* Control text width */
+    max-width: 600px;
 }
 
 .merged-text-container .btn-dark {
-    /* Style for the button within the merged block */
-    align-self: flex-start; /* Align button to the left */
+    background-color: transparent;
+    color: var(--text-light);
+    border-color: var(--text-light);
+    box-shadow: none;
+}
+.merged-text-container .btn-dark:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--primary-red);
+    border-color: var(--primary-red);
+    transform: translateY(-2px);
+    box-shadow: none;
 }
 
 
-/* --- Service USP Section (from your previous code) --- */
+/* --- Service USP Section (Background & Text Changed) --- */
 .service-usp-section {
     padding: 80px 40px;
-    background-color: var(--light-gray); /* Light gray background */
-    color: var(--text-dark);
-    text-align: center; /* Center content of this section */
+    background-color: var(--background-dark); /* Solid dark background */
+    /* Apply the same subtle noise texture */
+    background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noiseFilter)" opacity="0.03"%3E%3C/rect%3E%3C/svg%3E');
+    background-repeat: repeat;
+    background-size: 100px 100px; /* Ensure size matches other sections */
+
+    color: var(--text-light);
+    text-align: center;
 }
 
-.service-usp-content { /* Added a class for styling content inside */
+.service-usp-content {
     max-width: 900px;
     margin: 0 auto;
 }
 
 .service-usp-content h3 {
+    color: var(--primary-red);
     font-size: 3em;
     font-weight: 700;
     margin-bottom: 30px;
@@ -447,6 +455,7 @@ body.scrolled .logo img {
 }
 
 .service-usp-content p {
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.15em;
     line-height: 1.7;
     margin-bottom: 40px;
@@ -457,10 +466,16 @@ body.scrolled .logo img {
 
 
 /* --- Final CTA Section --- */
+/* --- Final CTA Section --- */
 .final-cta {
     text-align: center;
     padding: 100px 40px;
-    background-color: var(--background-dark);
+    background-color: var(--background-dark); /* Solid dark background */
+    /* Apply the same subtle noise texture */
+    background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noiseFilter)" opacity="0.03"%3E%3C/rect%3E%3C/svg%3E');
+    background-repeat: repeat;
+    background-size: 100px 100px; /* Ensure size matches other sections */
+
     color: var(--text-light);
 }
 
@@ -476,10 +491,31 @@ body.scrolled .logo img {
 footer {
     text-align: center;
     padding: 30px;
-    background-image: linear-gradient(to bottom, #444, var(--border-grey)); /* Adjust colors as needed */
+    background-color: var(--background-dark); /* Solid dark background */
+    /* Apply the same subtle noise texture */
+    background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noiseFilter)" opacity="0.03"%3E%3C/rect%3E%3C/svg%3E');
+    background-repeat: repeat;
+    background-size: 100px 100px; /* Ensure size matches other sections */
+
     color: var(--text-light);
     font-size: 0.9em;
 }
+
+/* --- Global Grid Background --- */
+/* .grid-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), /* Faint white lines */
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    pointer-events: none;
+} */
+
 
 /* --- Responsive Design --- */
 @media (max-width: 1200px) {
@@ -496,9 +532,8 @@ footer {
         font-size: 1.1em;
     }
     .usp-text-block {
-        padding: 60px; /* Slightly reduce padding on larger tablets */
+        padding: 60px;
     }
-    /* #sell .usp-text-block specific rule is overridden by .merged-text-container now */
 }
 
 @media (max-width: 992px) {
@@ -526,30 +561,30 @@ footer {
         gap: 20px;
     }
     .btn {
-        width: 80%; /* Make buttons wider on smaller screens */
+        width: 80%;
         margin: 0 auto;
     }
 
     .usp-showcase {
-        flex-direction: column; /* Stack vertically */
-        padding: 40px 20px; /* Adjust padding for stacked layout */
-        gap: 30px; /* Smaller gap for stacked layout */
+        flex-direction: column;
+        padding: 40px 20px;
+        gap: 30px;
     }
     .usp-showcase.reverse {
-        flex-direction: column; /* Keep stacked */
+        flex-direction: column;
     }
     .usp-text-block {
         padding: 50px 40px;
-        text-align: center; /* Center text when stacked */
-        align-items: center; /* Center content when stacked */
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); /* Slightly softer shadow on tablets */
+        text-align: center;
+        align-items: center;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
     .usp-text-block:hover,
     .usp-image-block:hover {
-        transform: translateY(-3px); /* Less lift on hover */
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(var(--primary-red-rgb), 0.4); /* Adjusted glow on mobile */
     }
-    /* #sell .usp-text-block specific rule is overridden by .merged-text-container now */
+
     .usp-text-block h2 {
         font-size: 2.5em;
     }
@@ -562,11 +597,11 @@ footer {
     }
     .usp-image-block {
         width: 100%;
-        height: 350px; /* Give image a fixed height when stacked */
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); /* Apply shadow to image block on tablets */
+        height: 350px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
     .usp-video {
-        width: 100%; /* Make video fill container when stacked */
+        width: 100%;
     }
     .final-cta h3 {
         font-size: 2.8em;
@@ -577,25 +612,25 @@ footer {
 
     /* Merged Section Responsive */
     .usp-showcase-merged {
-        padding: 50px 20px; /* Adjust padding for smaller screens */
-        min-height: unset; /* Allow height to adjust */
+        padding: 50px 20px;
+        min-height: unset;
     }
     .merged-content-block {
-        flex-direction: column; /* Stack video and text vertically */
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06); /* Softer shadow for mobile */
+        flex-direction: column;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
     .merged-content-block:hover {
-        transform: translateY(-3px); /* Less lift on hover for mobile */
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(var(--primary-red-rgb), 0.5); /* Adjusted glow on mobile */
     }
     .merged-video-container {
-        min-width: unset; /* Remove min-width when stacked */
-        height: 300px; /* Give video a fixed height when stacked */
-        padding-bottom: 0; /* Remove padding trick when height is fixed */
+        min-width: unset;
+        height: 300px;
+        padding-bottom: 0;
     }
     .merged-text-container {
-        padding: 40px 30px; /* Adjust padding for stacked text */
-        align-items: center; /* Center text when stacked */
+        padding: 40px 30px;
+        align-items: center;
         text-align: center;
     }
     .merged-text-container h2 {
@@ -605,7 +640,7 @@ footer {
         font-size: 1.1em;
     }
     .merged-text-container .btn-dark {
-        align-self: center; /* Center button when stacked */
+        align-self: center;
     }
 }
 
@@ -614,7 +649,7 @@ footer {
         padding: 10px 15px;
     }
     .logo {
-        height: 30px; /* Adjust logo size for smaller screens */
+        height: 30px;
     }
     .logo img {
         height: 30px;
@@ -662,7 +697,7 @@ footer {
 
 @media (max-width: 480px) {
     .main-nav {
-        display: none; /* Hide navigation on very small screens, consider a hamburger menu */
+        display: none;
     }
     .hero-content h1 {
         font-size: 2em;
@@ -703,8 +738,4 @@ footer {
     .merged-text-container {
         padding: 30px 20px;
     }
-}
-/* Explicitly ensure Service section video is on the left */
-#service .merged-content-block {
-    flex-direction: row; /* Forces video to left, text to right */
 }
