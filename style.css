@@ -246,7 +246,7 @@ body.scrolled .main-header {
 .usp-showcase {
     display: flex;
     min-height: 80vh;
-    background-color: var(--background-dark); /* Base dark color */
+    background-color: var(--background-dark); /* Solid dark base color */
     /* Cosmic background layers */
     background-image:
         radial-gradient(circle at center, rgba(68, 102, 255, 0.08) 0%, transparent 60%),
@@ -283,6 +283,8 @@ body.scrolled .main-header {
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    /* Removed explicit border here, relying on shadow for definition */
+    border: none; /* Ensure no accidental borders like the red outline */
 }
 
 /* Enhanced Hover effect for text and image/video blocks */
@@ -342,6 +344,7 @@ body.scrolled .main-header {
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: none; /* Ensure no accidental borders */
 }
 
 /* Style for video inside usp-image-block */
@@ -384,10 +387,37 @@ body.scrolled .main-header {
     animation: cosmicTunnel 80s linear infinite; /* Long duration for subtle, slow motion */
 }
 
-.merged-content-block {
+/* This is the container for the full video background card, which will apply to #sell, #service, #vintage */
+.merged-content-block.full-video-card {
+    position: relative;
     display: flex;
-    flex-direction: row-reverse; /* Default for #sell and #vintage, #service overrides */
-    background-color: var(--background-dark-card); /* SOLID slightly lighter dark */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    padding: 0; /* No direct padding on the block itself, content padding comes from text overlay */
+    background-color: var(--background-dark-card); /* Fallback color for the card */
+    min-height: 500px; /* Ensure the card has a visible height */
+    text-align: center; /* Center the text by default */
+    border-radius: 8px; /* Standard border radius */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); /* Standard shadow */
+    overflow: hidden; /* Crucial for video/overlay within */
+    max-width: 1200px; /* Max width for the card */
+    width: 100%; /* Take full available width within max-width */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Hover effect for the full video background card */
+.merged-content-block.full-video-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(var(--primary-red-rgb), 0.6);
+}
+
+/* General merged-content-block rules (now only apply if 'full-video-card' isn't present) */
+/* This specific style is no longer needed as #sell, #service, #vintage all use full-video-card */
+/* Removed: flex-direction: row-reverse; */
+.merged-content-block {
+    display: flex; /* Keep flex */
+    background-color: var(--background-dark-card);
     border-radius: 8px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
     overflow: hidden;
@@ -396,88 +426,87 @@ body.scrolled .main-header {
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-/* Specific rule to make service video on the left */
-#service .merged-content-block {
-    flex-direction: row; /* Video on left, text on right */
+
+/* Hide original split layout children when full-video-card is active */
+.merged-content-block.full-video-card .merged-video-container,
+.merged-content-block.full-video-card .merged-text-container {
+    display: none;
 }
 
-
-.merged-content-block:hover {
-    transform: translateY(-8px);
-    /* Subtle glow in primary red for merged blocks */
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 35px rgba(var(--primary-red-rgb), 0.6);
-}
-
-.merged-video-container {
-    flex: 1;
-    min-width: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000;
-    position: relative;
-    padding-bottom: calc(56.25% * 0.7); /* Aspect ratio trick for video height */
-}
-
-.merged-usp-video {
+/* The video background specific to these full cards */
+.card-bg-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
+    z-index: 1; /* Behind overlay and text */
 }
 
-.merged-text-container {
-    flex: 1;
-    padding: 80px;
+/* The overlay for text readability on the video background */
+.card-bg-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Adjust opacity for desired text readability */
+    z-index: 2; /* Between video and text */
+}
+
+/* The container for the text content, positioned on top of video/overlay */
+.merged-text-content-overlay {
+    position: relative; /* Ensures it's above the video and overlay */
+    z-index: 3;
+    width: 100%;
+    max-width: 800px; /* Constrain max width of the text content */
+    padding: 80px 40px; /* Generous padding around the text */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-    text-align: left;
+    align-items: center; /* Center items within this overlay */
     color: var(--text-light);
+    text-align: center; /* Explicitly center text within this overlay */
 }
 
-.merged-text-container h2 {
+/* Text styles within the full video background card */
+.merged-text-content-overlay h2 {
+    font-size: 4em;
     color: var(--primary-red);
-    font-size: 3.5em;
-    font-weight: 700;
-    margin-bottom: 25px;
-    letter-spacing: 2px;
-    line-height: 1.1;
-    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
 }
 
-.merged-text-container p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 1.2em;
-    line-height: 1.8;
-    margin-bottom: 40px;
-    max-width: 600px;
-}
-
-.merged-text-container .btn-dark {
-    background-color: var(--background-dark); /* Changed from transparent to solid dark */
+.merged-text-content-overlay p {
+    font-size: 1.3em;
     color: var(--text-light);
-    border-color: var(--background-dark);
-    box-shadow: none;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    text-shadow: 0 0 5px rgba(0,0,0,0.6);
 }
-.merged-text-container .btn-dark:hover {
+
+.merged-text-content-overlay .btn-dark {
     background-color: var(--primary-red);
     color: var(--text-light);
     border-color: var(--primary-red);
+    padding: 18px 50px;
+    font-size: 1.2em;
+}
+
+.merged-text-content-overlay .btn-dark:hover {
+    background-color: #c0211a;
+    border-color: #c0211a;
     transform: translateY(-2px);
-    box-shadow: none;
 }
 
 
 /* --- Service USP Section (Cosmic Background) --- */
 .service-usp-section {
     padding: 80px 40px;
-    background-color: var(--background-dark); /* Solid dark base color */
-    /* Cosmic background layers */
+    background-color: var(--background-dark);
     background-image:
         radial-gradient(circle at center, rgba(68, 102, 255, 0.08) 0%, transparent 60%),
         radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%),
@@ -488,7 +517,7 @@ body.scrolled .main-header {
     background-size: 100% 100%, 1500px 1500px, 1200px 1200px, 100px 100px;
     background-position: center center, 0px 0px, 0px 0px, 0px 0px;
 
-    animation: cosmicTunnel 80s linear infinite; /* Long duration for subtle, slow motion */
+    animation: cosmicTunnel 80s linear infinite;
 
     color: var(--text-light);
     text-align: center;
@@ -523,8 +552,7 @@ body.scrolled .main-header {
 .final-cta {
     text-align: center;
     padding: 100px 40px;
-    background-color: var(--background-dark); /* Solid dark base color */
-    /* Cosmic background layers */
+    background-color: var(--background-dark);
     background-image:
         radial-gradient(circle at center, rgba(68, 102, 255, 0.08) 0%, transparent 60%),
         radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%),
@@ -535,27 +563,26 @@ body.scrolled .main-header {
     background-size: 100% 100%, 1500px 1500px, 1200px 1200px, 100px 100px;
     background-position: center center, 0px 0px, 0px 0px, 0px 0px;
 
-    animation: cosmicTunnel 80s linear infinite; /* Long duration for subtle, slow motion */
+    animation: cosmicTunnel 80s linear infinite;
 
     color: var(--text-light);
 }
 
 /* --- Global Grid Background --- */
-/* --- Global Grid Background --- */
 .grid-background {
-    position: fixed; /* Use fixed to keep it static while scrolling */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-image:
-        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), /* Faint white lines */
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 50px 50px; /* Grid spacing, adjust as needed */
-    z-index: -1; /* Place it behind all content */
-    opacity: 1; /* Ensure it's not hidden by global opacity */
-    pointer-events: none; /* Ensure it doesn't interfere with mouse events */
-    display: block; /* Make sure it's not set to none */
+    background-size: 50px 50px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 1; /* Make sure it's visible */
+    display: block; /* Make sure it's not hidden */
 }
 
 
@@ -563,7 +590,7 @@ body.scrolled .main-header {
 footer {
     text-align: center;
     padding: 30px;
-    background-color: var(--background-dark); /* Solid dark background */
+    background-color: var(--background-dark);
     background-image: none; /* No speed lines */
     color: var(--text-light);
     font-size: 0.9em;
@@ -585,6 +612,14 @@ footer {
     }
     .usp-text-block {
         padding: 60px;
+    }
+
+    /* Full Video Card Responsive */
+    .merged-text-content-overlay h2 {
+        font-size: 3.5em; /* Adjusted for smaller desktop screens */
+    }
+    .merged-text-content-overlay p {
+        font-size: 1.2em;
     }
 }
 
@@ -666,7 +701,7 @@ footer {
         padding: 50px 20px;
         min-height: unset;
     }
-    .merged-content-block {
+    .merged-content-block { /* This is the general merged-content-block */
         flex-direction: column;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     }
@@ -674,12 +709,12 @@ footer {
         transform: translateY(-3px);
         box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(var(--primary-red-rgb), 0.5);
     }
-    .merged-video-container {
+    .merged-video-container { /* This is for the old split layout, but also a fallback for new */
         min-width: unset;
         height: 300px;
         padding-bottom: 0;
     }
-    .merged-text-container {
+    .merged-text-container { /* This is for the old split layout */
         padding: 40px 30px;
         align-items: center;
         text-align: center;
@@ -692,6 +727,25 @@ footer {
     }
     .merged-text-container .btn-dark {
         align-self: center;
+    }
+
+    /* Full video card specific responsive overrides */
+    .merged-content-block.full-video-card {
+        min-height: 400px; /* Adjusted height for stacked cards */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    .merged-content-block.full-video-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(var(--primary-red-rgb), 0.5);
+    }
+    .merged-text-content-overlay {
+        padding: 40px 20px;
+    }
+    .merged-text-content-overlay h2 {
+        font-size: 2.5em; /* Match usp-text-block headings */
+    }
+    .merged-text-content-overlay p {
+        font-size: 1.1em;
     }
 }
 
@@ -735,13 +789,16 @@ footer {
     .service-usp-content p {
         font-size: 1em;
     }
-    .merged-text-container h2 {
+    .merged-text-content-overlay h2 {
         font-size: 2em;
     }
-    .merged-text-container p {
+    .merged-text-content-overlay p {
         font-size: 1em;
     }
-    .merged-video-container {
+    .merged-content-block.full-video-card {
+        min-height: 300px;
+    }
+    .merged-video-container { /* Old split layout */
         height: 250px;
     }
 }
@@ -777,16 +834,19 @@ footer {
     .service-usp-content h3 {
         font-size: 1.8em;
     }
-    .merged-text-container h2 {
+    .merged-text-content-overlay h2 {
         font-size: 1.8em;
     }
-    .merged-text-container p {
+    .merged-text-content-overlay p {
         font-size: 0.9em;
     }
-    .merged-video-container {
+    .merged-content-block.full-video-card {
+        min-height: 250px;
+    }
+    .merged-video-container { /* Old split layout */
         height: 200px;
     }
-    .merged-text-container {
+    .merged-text-content-overlay {
         padding: 30px 20px;
     }
 }
