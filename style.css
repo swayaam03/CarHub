@@ -69,7 +69,7 @@ body.scrolled .main-header {
 }
 
 .logo img {
-    height: 80px; /* Adjusted height */
+    height: 110px; /* Adjusted height */
     width: auto;
     max-height: 100%;
     filter: none; /* Assuming logo.png is white/light */
@@ -84,7 +84,7 @@ body.scrolled .main-header {
 }
 
 .main-nav ul li a {
-    font-size: 1.05em;
+    font-size: 1.75em;
     font-weight: 600;
     color: var(--text-light); /* Navigation links are light */
     padding-bottom: 5px;
