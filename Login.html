@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarHub - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://accounts.google.com/gsi/client" async></script>
+</head>
+<body class="auth-page-body">
+
+    <div class="grid-background"></div>
+
+    <header class="main-header auth-header-minimal">
+        <div class="logo">
+            <img src="logo.png" alt="CarHub Logo">
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <div class="auth-card-header">
+                
+                <h2>Login</h2>
+            </div>
+            <form class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+
+            <div class="google-login-separator">Or</div> <div id="g_id_onload"
+                 data-client_id="758648937915-kkehi16hlh3gjb3g7q165os0s5sa2jck.apps.googleusercontent.com" 
+                 data-callback="handleCredentialResponse"
+                 data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin"
+                 data-type="standard"
+                 data-size="large"
+                 data-theme="outline"
+                 data-text="signin_with"
+                 data-shape="rectangular"
+                 data-logo_alignment="left">
+            </div>
+
+            <div class="auth-links">
+                <a href="#">Forgot Password?</a>
+                <span>|</span>
+                <a href="signup.html">Don't have an account? Sign Up</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Hero Video Fade-out script is not needed here
+        // Scroll listener for header transparency (from index.html)
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.main-header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Google Sign-In Callback Function
+        function handleCredentialResponse(response) {
+            // response.credential contains the ID token from Google.
+            // This token MUST be sent to your backend server for verification.
+            console.log("Encoded ID Token: " + response.credential);
+
+            // --- IMPORTANT: This is where you would send the token to your server ---
+            // Example:
+            /*
+            fetch('/api/google-login', { // Replace with your backend endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token: response.credential }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Login success on backend:', data);
+                // Redirect user or update UI based on backend response
+                alert('Google Login successful!');
+                // window.location.href = 'dashboard.html'; // Example redirect
+            })
+            .catch(error => {
+                console.error('Error during Google login process:', error);
+                alert('Google Login failed. Please try again.');
+            });
+            */
+            // For front-end testing, you can just log or alert:
+            alert('Google Login successful! Token received. (Token should be sent to backend)');
+            // In a real application, you would handle the server response and redirect.
+        }
+    </script>
+</body>
+</html>

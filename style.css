@@ -69,7 +69,7 @@ body.scrolled .main-header {
 }
 
 .logo img {
-    height: 110px; /* Adjusted height */
+    height: 80px; /* Adjusted height */
     width: auto;
     max-height: 100%;
     filter: none; /* Assuming logo.png is white/light */
@@ -84,7 +84,7 @@ body.scrolled .main-header {
 }
 
 .main-nav ul li a {
-    font-size: 1.75em;
+    font-size: 1.05em;
     font-weight: 600;
     color: var(--text-light); /* Navigation links are light */
     padding-bottom: 5px;
@@ -848,5 +848,245 @@ footer {
     }
     .merged-text-content-overlay {
         padding: 30px 20px;
+    }
+}
+
+/* --- Authentication Pages (Login/Signup) Styles --- */
+
+.auth-page-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: var(--background-dark); /* Base dark color */
+    /* Cosmic background layers from main sections */
+    background-image:
+        radial-gradient(circle at center, rgba(68, 102, 255, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.01) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
+        url('data:image/svg+xml,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23noiseFilter)" opacity="0.03"%3E%3C/rect%3E%3C/svg%3E');
+
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+    background-size: 100% 100%, 1500px 1500px, 1200px 1200px, 100px 100px;
+    background-position: center center, 0px 0px, 0px 0px, 0px 0px;
+
+    animation: cosmicTunnel 80s linear infinite; /* Apply cosmic animation */
+}
+
+/* Auth Container: Centers the card vertically and horizontally */
+.auth-container {
+    flex-grow: 1; /* Takes up available space to push footer down */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px; /* Padding around the card */
+}
+
+/* Auth Card: The main form container */
+.auth-card {
+    background-color: var(--background-dark-card); /* Slightly lighter dark background */
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    padding: 40px 50px;
+    width: 100%;
+    max-width: 480px; /* Max width for the card */
+    text-align: center;
+    color: var(--text-light); /* Light text on card */
+}
+
+.auth-card h2 {
+    font-size: 2.5em;
+    color: var(--primary-red); /* Red heading */
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.auth-form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left; /* Align labels/inputs to the left within the group */
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9em;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: rgba(255, 255, 255, 0.08); /* Slightly transparent white for input background */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle light border */
+    border-radius: 4px;
+    color: var(--text-light); /* Light text input */
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.4); /* Muted placeholder text */
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-red); /* Red border on focus */
+    box-shadow: 0 0 8px rgba(var(--primary-red-rgb), 0.5); /* Red glow on focus */
+}
+
+.form-actions {
+    margin-top: 30px;
+}
+
+/* Button styles are shared from main theme (.btn, .btn-primary) */
+
+.auth-links {
+    font-size: 0.9em;
+    color: var(--text-secondary); /* Muted text for links */
+    margin-top: 25px; /* Space above links */
+}
+
+.auth-links a {
+    color: var(--primary-red); /* Red accent for links */
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+    color: #c0211a; /* Darker red on hover */
+    text-decoration: underline;
+}
+
+.auth-links span {
+    margin: 0 10px; /* Space around separators */
+    color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments for auth pages */
+@media (max-width: 768px) {
+    .auth-container {
+        padding: 40px 15px;
+    }
+    .auth-card {
+        padding: 30px 25px;
+        max-width: 400px;
+    }
+    .auth-card h2 {
+        font-size: 2em;
+        margin-bottom: 25px;
+    }
+    .form-group input {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+    .btn.btn-primary { /* Explicitly target auth page primary button */
+        font-size: 1em;
+        padding: 15px 30px;
+    }
+    .auth-links {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 25px 15px;
+    }
+    .auth-card h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        font-size: 0.8em;
+    }
+    .form-group input {
+        padding: 10px 12px;
+    }
+    .auth-links {
+        font-size: 0.8em;
+    }
+}
+/* --- Authentication Pages (Login/Signup) Styles --- */
+
+/* ... (existing .auth-page-body, .auth-container, .auth-card, etc. styles) ... */
+
+/* Google Login Separator */
+.google-login-separator {
+    color: var(--text-secondary); /* Muted text color */
+    font-size: 0.9em;
+    margin: 25px 0; /* Space above and below */
+    position: relative;
+    text-align: center;
+}
+
+.google-login-separator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 45%; /* Line length */
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1); /* Faint white line */
+    transform: translateY(-50%);
+}
+
+.google-login-separator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 45%; /* Line length */
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-50%);
+}
+
+/* Adjust margin for auth-links so it's below the Google button */
+.auth-links {
+    margin-top: 25px; /* Adjust as needed */
+}
+
+/* Specific styling for Google button container (rendered by Google) */
+/* This ensures the Google button itself takes full width and is centered */
+.g_id_signin {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Make the button container take full width */
+    margin-bottom: 20px; /* Space below the button */
+}
+
+/* Further customize Google button if default isn't matching */
+/* Note: Google's default button styles are hard to fully override.
+   You can change data-theme="dark" or "outline" in HTML for color. */
+/* For example, if you want a custom button that triggers Google login:
+.my-custom-google-btn {
+    background-color: #4285F4; // Google blue
+    color: white;
+    // ... custom styling ...
+}
+*/
+
+/* Responsive adjustments for Google button and separator */
+@media (max-width: 480px) {
+    .google-login-separator {
+        margin: 20px 0;
+        font-size: 0.8em;
+    }
+    .google-login-separator::before,
+    .google-login-separator::after {
+        width: 40%;
+    }
+    .auth-links {
+        margin-top: 20px;
     }
 }
