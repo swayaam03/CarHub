@@ -41,7 +41,7 @@
             </form>
 
             <div class="google-login-separator">Or</div> <div id="g_id_onload"
-                 data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" 
+                 data-client_id="1024964311026-kro2m4o0i163i1o1ucj67m31jogttuvt.apps.googleusercontent.com" 
                  data-callback="handleCredentialResponse"
                  data-auto_prompt="false">
             </div>
@@ -82,7 +82,7 @@
 
             // --- IMPORTANT: This is where you would send the token to your server ---
             // Example:
-            /*
+        
             fetch('/api/google-login', { // Replace with your backend endpoint
                 method: 'POST',
                 headers: {
@@ -101,7 +101,7 @@
                 console.error('Error during Google login process:', error);
                 alert('Google Login failed. Please try again.');
             });
-            */
+            
             // For front-end testing, you can just log or alert:
             alert('Google Login successful! Token received. (Token should be sent to backend)');
             // In a real application, you would handle the server response and redirect.
