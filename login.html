@@ -83,11 +83,9 @@
             // --- IMPORTANT: This is where you would send the token to your server ---
             // Example:
         
-            fetch('/api/google-login', { // Replace with your backend endpoint
+            fetch('http://localhost:3000/api/google-login', { // Use your backend URL
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token: response.credential }),
             })
             .then(response => response.json())
